@@ -1,0 +1,28 @@
+#name of the action
+name: Deploy
+
+#when should action run
+on:
+  push:
+    branches:
+      - master # or the branch you want to deploy from
+
+#what should this action do
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code #clone code
+      uses: actions/checkout@v2
+  
+    - name: SSH and deploy
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > keyfile
+        chmod 600 keyfile
+        ssh -t -i keyfile ubuntu@ec2-54-163-56-166.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
+
+
