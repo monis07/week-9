@@ -15,7 +15,7 @@ jobs:
 
     - name: SSH and deploy #SSH into AWS EC2 instance using key-pair value
       env:
-        SECRET_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         #Explanation of all 5 commands to run:
         #create a keyfile with the SSH_PRIVATE_KEY value
         #change the permission of the keyfile to 600
@@ -23,7 +23,7 @@ jobs:
         #copy the known_hosts file to .ssh directory
         #SSH into the EC2 instance using the keyfile and run the deploy.sh script
       run: |
-        echo $SSH_PRIVATE_KEY > keyfile 
+        echo "$SSH_PRIVATE_KEY" > keyfile 
         chmod 644 keyfile
         mkdir -p ~/.ssh
         cp known_hosts ~/.ssh/known_hosts
