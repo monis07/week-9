@@ -15,7 +15,7 @@ jobs:
 
     - name: SSH and deploy #SSH into AWS EC2 instance using key-pair value
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SECRET_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         #Explanation of all 5 commands to run:
         #create a keyfile with the SSH_PRIVATE_KEY value
         #change the permission of the keyfile to 600
