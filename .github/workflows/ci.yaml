@@ -23,7 +23,7 @@ jobs:
         #copy the known_hosts file to .ssh directory
         #SSH into the EC2 instance using the keyfile and run the deploy.sh script
       run: |
-        echo "$SSH_PRIVATE_KEY" > keyfile 
+        echo $SSH_PRIVATE_KEY > keyfile 
         chmod 644 keyfile
         mkdir -p ~/.ssh
         cp known_hosts ~/.ssh/known_hosts
