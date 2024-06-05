@@ -1,1 +1,1 @@
-ssh-keyscan ec2-url >> known_hosts
+ssh-keyscan ec2-54-227-107-206.compute-1.amazonaws.com >> known_hosts

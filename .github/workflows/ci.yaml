@@ -1,28 +1,31 @@
-#name of the action
 name: Deploy
-
-#when should action run
+#actions to do on push to master branch
 on:
   push:
     branches:
-      - master # or the branch you want to deploy from
-
-#what should this action do
-
+      - master 
+#what jobs to do if there is code push to master branch
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #github machine running the actions
 
     steps:
-    - name: Checkout code #clone code
-      uses: actions/checkout@v2
-  
-    - name: SSH and deploy
+    - name: Checkout code
+      uses: actions/checkout@v2 #clone the code from repo to github ubuntu machine
+
+    - name: SSH and deploy #SSH into AWS EC2 instance using key-pair value
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        #Explanation of all 5 commands to run:
+        #create a keyfile with the SSH_PRIVATE_KEY value
+        #change the permission of the keyfile to 600
+        #create a .ssh directory in the ubuntu machine
+        #copy the known_hosts file to .ssh directory
+        #SSH into the EC2 instance using the keyfile and run the deploy.sh script
       run: |
-        echo "$SSH_PRIVATE_KEY" > keyfile
+        echo "$SSH_PRIVATE_KEY" > keyfile 
         chmod 600 keyfile
-        ssh -T -i keyfile ubuntu@ec2-54-227-107-206.compute-1.amazonaws.com "source ../part-2-scripts/deploy.sh"
-
+        mkdir -p ~/.ssh
+        cp known_hosts ~/.ssh/known_hosts
+        ssh -t -i keyfile ubuntu@ec2-54-227-107-206.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
 
