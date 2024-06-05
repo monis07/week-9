@@ -24,7 +24,7 @@ jobs:
         #SSH into the EC2 instance using the keyfile and run the deploy.sh script
       run: |
         echo "$SSH_PRIVATE_KEY" > keyfile 
-        chmod 600 keyfile
+        chmod 644 keyfile
         mkdir -p ~/.ssh
         cp known_hosts ~/.ssh/known_hosts
         ssh -t -i keyfile ubuntu@ec2-54-227-107-206.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
